@@ -1,21 +1,19 @@
 <?php
 include 'connection.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $dob = $_POST['dob'];
-    $rememberMe = isset($_POST['rememberMe']) ? 1 : 0;
-    $sql = "INSERT INTO users (username, email, password, dob, remember_me) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssssi", $username, $email, $password, $dob, $rememberMe);
-    $stmt->execute();
-    $stmt->close();
-    $conn->close();
-    header("Location: success_page.html");
+function redirectToIndex() {
+    header("Location: index.php");
     exit;
 }
+$stmt = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['signup_btn'])) {
+        redirectToIndex();
+    }
+}
+if ($stmt !== null) {
+    $stmt->close();
+}
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,6 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="checkbox" class="form-check-input" id="rememberMe">
                             <label class="form-check-label" for="rememberMe">Remember me</label>
                         </div>
+                        <p>If you already have an account, <a href="login.php">Login in here</a>.</p>
                         <button type="submit" class="btn btn-primary login-btn">Sign In</button>
                     </form>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>

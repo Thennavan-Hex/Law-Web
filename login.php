@@ -1,28 +1,35 @@
 <?php
 include 'connection.php';
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $rememberMe = isset($_POST['rememberMe']) ? 1 : 0;
-    $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows === 1) {
-        $row = $result->fetch_assoc();
-        session_start();
-        $_SESSION['user_id'] = $row['id'];
-        header("Location: dashboard.php");
-        exit;
-    } else {
-        $error_message = "Invalid username or password.";
-    }
-
-    $stmt->close();
-    $conn->close();
+function redirectToIndex() {
+    header("Location: index.php");
+    exit;
 }
+$stmt = null;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['login_btn'])) {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $rememberMe = isset($_POST['rememberMe']) ? 1 : 0;
+        $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ss", $username, $password);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows === 1) {
+            $row = $result->fetch_assoc();
+            session_start();
+            $_SESSION['user_id'] = $row['id'];
+            redirectToIndex();
+        } else {
+            header("Location: login.php?error=1");
+            exit;
+        }
+    }
+}
+if ($stmt !== null) {
+    $stmt->close();
+}
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label class="form-check-label" for="rememberMe">Remember me</label>
                         </div>
                         <button type="submit" class="btn btn-primary login-btn">Login</button>
+                        <p>New user, <a href="signin.php">sign in for Free</a>.</p>
                     </form>
                     <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     <?php
