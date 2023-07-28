@@ -1,3 +1,22 @@
+<?php
+include 'connection.php';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $dob = $_POST['dob'];
+    $rememberMe = isset($_POST['rememberMe']) ? 1 : 0;
+    $sql = "INSERT INTO users (username, email, password, dob, remember_me) VALUES (?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssi", $username, $email, $password, $dob, $rememberMe);
+    $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    header("Location: success_page.html");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
