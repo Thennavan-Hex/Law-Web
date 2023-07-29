@@ -5,43 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <style>
-        body{
-            background-color: #f8f9f9;
-        }
-        .container {
-            margin-top: 100px;
-        }
-        .box-container {
-            background-color: #f1f1f1;
-            padding: 40px;
-            border-radius: 30px;
-        }
-        .lottie-container {
-            text-align: center;
-        }
-        .lottie-player {
-            width: 100%;
-            max-width: 100%;
-            bottom: 70px;
-        }
-        .form-control {
-            font-size: 20px;
-            padding: 5px;
-        }
-        .g-signin2 {
-            margin-top: 15px;
-            width: 100%;
-        }
-        @media (max-width: 768px) {
-            .lottie-container {
-                margin-bottom: 20px;
-            }
-        }
-        .login-btn {
-            width: 100%;
-        }
-    </style>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <div class="container d-flex justify-content-center">
