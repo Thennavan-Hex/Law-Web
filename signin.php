@@ -1,20 +1,3 @@
-<?php
-include 'connection.php';
-function redirectToIndex() {
-    header("Location: index.php");
-    exit;
-}
-$stmt = null;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['signup_btn'])) {
-        redirectToIndex();
-    }
-}
-if ($stmt !== null) {
-    $stmt->close();
-}
-$conn->close();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -68,7 +51,7 @@ $conn->close();
                     <lottie-player src="https://lottie.host/e2cbf711-dba0-4b9a-9e81-0e889c3ab2a7/mW7VnnyWLO.json" background speed="1" style="width: 100%; max-width: 400px; height: auto;" direction="1" mode="normal" loop autoplay hover ></lottie-player>
                 </div>
                 <div class="col-md-6">
-                    <form>
+                    <form action="connection.php" method="post">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required>

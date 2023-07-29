@@ -1,37 +1,3 @@
-<?php
-include 'connection.php';
-function redirectToIndex() {
-    header("Location: index.php");
-    exit;
-}
-$stmt = null;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['login_btn'])) {
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $rememberMe = isset($_POST['rememberMe']) ? 1 : 0;
-        $sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $username, $password);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        if ($result->num_rows === 1) {
-            $row = $result->fetch_assoc();
-            session_start();
-            $_SESSION['user_id'] = $row['id'];
-            redirectToIndex();
-        } else {
-            header("Location: login.php?error=1");
-            exit;
-        }
-    }
-}
-if ($stmt !== null) {
-    $stmt->close();
-}
-$conn->close();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -87,10 +53,10 @@ $conn->close();
                     <lottie-player src="https://lottie.host/c045d9a1-f1f9-4f1e-838b-4345eab9e8ca/GijBVCz994.json" background speed="1" style="width: 100%; max-width: 400px; height: auto;" direction="1" mode="normal" loop autoplay hover></lottie-player>
                 </div>
                 <div class="col-md-6">
-                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                    <form action="logincheck.php" method="POST">
+                        <div class="form-group">
+                            <label for="username" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="username" name="username" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
