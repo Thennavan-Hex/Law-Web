@@ -11,7 +11,7 @@ if ($conn->connect_error) {
     $stmt_result = $stmt->get_result();
     if ($stmt_result->num_rows > 0) {
         $data = $stmt_result->fetch_assoc();
-        if ($data['password'] == $pass) {
+        if (password_verify($pass, $data['password'])) {
             session_start();
             $_SESSION['user_id'] = $data['id']; 
             header("Location: index.php");
