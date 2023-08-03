@@ -1,113 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
     <title>404 Page Not Found</title>
-    <style media="screen">
-        html,body{
-            margin: 0;
-            padding: 0;
-        }
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
+@keyframes floating {
+  from {
+    transform: translateY(0px);
+  }
+  65% {
+    transform: translateY(15px);
+  }
+  to {
+    transform: translateY(0px);
+  }
+}
+html {
+  height: 100%;
+}
+body {
+  background-image: url('https://assets.codepen.io/1538474/star.svg'), linear-gradient(to bottom, #05007A, #4D007D);
+  height: 100%;
+  margin: 0;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+.mars {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  height: 27vmin;
+  background: url('https://assets.codepen.io/1538474/mars.svg') no-repeat bottom center;
+  background-size: cover;
+}
+.logo-404 {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 16vmin;
+  width: 30vmin;
+}
+@media (max-width: 480px) and (min-width: 320px) {
+  .logo-404 {
+    top: 45vmin;
+  }
+}
+.meteor {
+  position: absolute;
+  right: 2vmin;
+  top: 16vmin;
+}
+.title {
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 600;
+  text-align: center;
+  font-size: 5vmin;
+  margin-top: 31vmin;
+}
+@media (max-width: 480px) and (min-width: 320px) {
+  .title {
+    margin-top: 65vmin;
+  }
+}
+.subtitle {
+  color: white;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  font-size: 3.5vmin;
+  margin-top: -1vmin;
+  margin-bottom: 9vmin;
+}
+.btn-back {
+  border: 1px solid white;
+  color: white;
+  height: 5vmin;
+  padding: 12px;
+  font-family: 'Nunito', sans-serif;
+  text-decoration: none;
+  border-radius: 5px;
+}
+.btn-back:hover {
+  background: white;
+  color: #4D007D;
+}
+@media (max-width: 480px) and (min-width: 320px) {
+  .btn-back {
+    font-size: 3.5vmin;
+  }
+}
+.astronaut {
+  position: absolute;
+  top: 18vmin;
+  left: 10vmin;
+  height: 30vmin;
+  animation: floating 3s infinite ease-in-out;
+}
+@media (max-width: 480px) and (min-width: 320px) {
+  .astronaut {
+    top: 2vmin;
+  }
+}
+.spaceship {
+  position: absolute;
+  bottom: 15vmin;
+  right: 24vmin;
+}
+@media (max-width: 480px) and (min-width: 320px) {
+  .spaceship {
+    width: 45vmin;
+    bottom: 18vmin;
+  }
+}
 
-        canvas{
-            display: block;
-        }
     </style>
 </head>
 <body>
-
-<script type="text/javascript">
-    var canvas = document.createElement('canvas');
-    var height = canvas.height = window.innerHeight;
-    var width = canvas.width = window.innerWidth;
-    var ctx = canvas.getContext('2d');
-    document.body.appendChild(canvas);
-
-    function random(min,max)
-    {
-        return Math.random()*(max-min+1)+min;
-    }
-
-    function range_map(value,in_min, in_max, out_min, out_max) {
-        return (value - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-    }
-
-    var word_arr = [];
-    var txt_min_size = 5;
-    var txt_max_size = 25;
-    var keypress = false;
-    var acclerate = 2;
-    for (var i = 0; i < 25; i++) {
-        word_arr.push({
-            x : random(0,width),
-            y : random(0,height),
-            text : '404',
-            size : random(txt_min_size,txt_max_size)
-        });
-
-        word_arr.push({
-            x : random(0,width),
-            y : random(0,height),
-            text : 'page',
-            size : random(txt_min_size,txt_max_size)
-        });
-
-        word_arr.push({
-            x : random(0,width),
-            y : random(0,height),
-            text : 'not found',
-            size : random(txt_min_size,txt_max_size)
-        });
-
-        word_arr.push({
-            x : random(0,width),
-            y : random(0,height),
-            text : '404',
-            size : Math.floor(random(txt_min_size,txt_max_size))
-        });
-    }
-
-    function render()
-    {
-        ctx.fillStyle = "rgba(0,0,0,1)";
-        ctx.fillRect(0,0,width,height);
-
-        ctx.fillStyle = "#fff";
-        for (var i = 0; i < word_arr.length; i++) {
-            ctx.font = word_arr[i].size+"px sans-serif";
-            var w = ctx.measureText(word_arr[i].text);
-            ctx.fillText(word_arr[i].text,word_arr[i].x,word_arr[i].y);
-
-            if(keypress)
-            {
-                word_arr[i].x += range_map(word_arr[i].size,txt_min_size,txt_max_size,2,4) * acclerate;
-            }
-            else {
-                word_arr[i].x += range_map(word_arr[i].size,txt_min_size,txt_max_size,2,3);
-            }
-
-            if(word_arr[i].x >= width)
-            {
-                word_arr[i].x = -w.width*2;
-                word_arr[i].y = random(0,height);
-                word_arr[i].size =  Math.floor(random(txt_min_size,txt_max_size));
-
-            }
-        }
-
-        ctx.fill();
-
-        requestAnimationFrame(render);
-    }
-
-    render();
-
-    window.addEventListener('keydown',function(){
-        keypress = true;
-    },true);
-    window.addEventListener('keyup',function(){
-        keypress = false;
-    },true);
-</script>
+<div class="mars"></div>
+<img src="https://assets.codepen.io/1538474/404.svg" class="logo-404" />
+<img src="https://assets.codepen.io/1538474/meteor.svg" class="meteor" />
+<p class="title">Oh no!!</p>
+<p class="subtitle">
+	You’re either misspelling the URL <br /> or requesting a page that's no longer here.
+</p>
+<div align="center">
+	<a class="btn-back" href="login.php">Back to previous page</a>
+</div>
+<img src="https://assets.codepen.io/1538474/astronaut.svg" class="astronaut" />
+<img src="https://assets.codepen.io/1538474/spaceship.svg" class="spaceship" />
 </body>
 </html>
