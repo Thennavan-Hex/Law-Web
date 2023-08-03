@@ -1,3 +1,16 @@
+<?php
+session_start();
+function isAdminLoggedIn() {
+    return (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true);
+}
+if (isset($_POST['logout'])) {
+    if (isAdminLoggedIn()) {
+        session_destroy();
+        header("Location: admin.php");
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +24,6 @@
     </style>
 </head>
 <body>
-    <?php
-    session_start();
-    if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
-        header("Location: admin.php");
-        exit;
-    }
-    ?>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Welcome to the Admin Page</h1>
         <div class="row justify-content-center">
@@ -55,7 +61,9 @@
     </div>
 
     <div class="container text-center mt-3">
-        <a href="logout.php" class="btn btn-primary">Logout</a>
+        <form method="post">
+            <button type="submit" name="logout" class="btn btn-primary">Logout</button>
+        </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

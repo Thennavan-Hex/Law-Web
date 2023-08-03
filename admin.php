@@ -4,10 +4,6 @@ $conn = new mysqli('localhost', 'root', '', 'law');
 if ($conn->connect_error) {
     die("Connection Failed");
 }
-if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) {
-    header("Location: admin_dashboard.php");
-    exit;
-}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];

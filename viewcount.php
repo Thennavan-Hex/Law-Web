@@ -9,17 +9,22 @@ if (!isset($_SESSION['view_count'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Count Page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">View Count Page</h1>
-        <p class="text-center">This page has been viewed <?php echo $_SESSION['view_count']; ?> times.</p>
-        <div class="text-center mt-3">
-            <a href="admin.php" class="btn btn-secondary">Back</a>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+</nav>
+<div class="container text-center mt-3">
+    <p>This page has been viewed <?php echo $_SESSION['view_count']; ?> times.</p>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/popper.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

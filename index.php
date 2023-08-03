@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+  header("Location: login.php"); 
+  exit(); 
+}
+if (isset($_POST['logout'])) {
+    session_destroy();
+    header("Location: login.php"); 
+    exit(); 
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,44 +34,41 @@
         <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
         <li class="nav-item dropdown">
           <?php
-            session_start();
-            if (isset($_SESSION['user_id'])) {
-              $host = 'localhost';
-              $username = 'root';
-              $password = '';
-              $database = 'law';
+            $host = 'localhost';
+            $username = 'root';
+            $password = '';
+            $database = 'law';
 
-              $conn = new mysqli($host, $username, $password, $database);
+            $conn = new mysqli($host, $username, $password, $database);
 
-              if ($conn->connect_error) {
-                  die("Connection Failed: " . $conn->connect_error);
-              }
-              $user_id = $_SESSION['user_id'];
-              $stmt = $conn->prepare("SELECT username FROM users WHERE id = ?");
-              $stmt->bind_param("i", $user_id);
-              $stmt->execute();
-              $stmt_result = $stmt->get_result();
-              
-              if ($stmt_result->num_rows > 0) {
-                  $row = $stmt_result->fetch_assoc();
-                  $name = $row["username"];
-              } else {
-                  $name = "Guest";
-              }
-              $conn->close();
-              echo '<li class="nav-item dropdown">';
-              echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-              echo $name;
-              echo '</a>';
-              echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">';
-              echo '<a class="dropdown-item" href="editprofile.php">Edit Profile</a>';
-              echo '<a class="dropdown-item" href="#">Settings</a>';
-              echo '<a class="dropdown-item" href="#">Logout</a>';
-              echo '</div>';
-              echo '</li>';
-            } else {
-              echo '<li class="nav-item"><a class="nav-link" href="#">Guest</a></li>';
+            if ($conn->connect_error) {
+                die("Connection Failed: " . $conn->connect_error);
             }
+            $user_id = $_SESSION['user_id'];
+            $stmt = $conn->prepare("SELECT username FROM users WHERE id = ?");
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $stmt_result = $stmt->get_result();
+            
+            if ($stmt_result->num_rows > 0) {
+                $row = $stmt_result->fetch_assoc();
+                $name = $row["username"];
+            } else {
+                $name = "Guest";
+            }
+            $conn->close();
+            echo '<li class="nav-item dropdown">';
+            echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+            echo $name;
+            echo '</a>';
+            echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">';
+            echo '<a class="dropdown-item" href="editprofile.php">Edit Profile</a>';
+            echo '<a class="dropdown-item" href="#">Settings</a>';
+            echo '<form method="POST" class="dropdown-item">';
+            echo '<button type="submit" name="logout" class="btn btn-link">Logout</button>';
+            echo '</form>';
+            echo '</div>';
+            echo '</li>';
           ?>
         </ul>
       </div>

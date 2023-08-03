@@ -1,3 +1,31 @@
+<?php
+session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['username'];
+    $pass = $_POST['password'];
+    $conn = new mysqli('localhost', 'root', '', 'law');
+    if ($conn->connect_error) {
+        die("Connection Failed");
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt_result = $stmt->get_result();
+        if ($stmt_result->num_rows > 0) {
+            $data = $stmt_result->fetch_assoc();
+            if (password_verify($pass, $data['password'])) {
+                $_SESSION['user_id'] = $data['id']; 
+                header("Location: index.php");
+                exit;
+            } else {
+                $error_message = "Invalid Email or password";
+            }
+        } else {
+            $error_message = "Invalid Email or password";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +33,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
     <div class="container d-flex justify-content-center">
@@ -14,7 +44,7 @@
                     <lottie-player src="https://lottie.host/c045d9a1-f1f9-4f1e-838b-4345eab9e8ca/GijBVCz994.json" background speed="1" style="width: 100%; max-width: 400px; height: auto;" direction="1" mode="normal" loop autoplay hover></lottie-player>
                 </div>
                 <div class="col-md-6">
-                    <form action="logincheck.php" method="POST">
+                    <form action="" method="POST">
                         <div class="form-group">
                             <label for="username" class="form-label">Email</label>
                             <input type="email" class="form-control" id="username" name="username" required>
@@ -30,7 +60,6 @@
                         <button type="submit" class="btn btn-primary login-btn">Login</button>
                         <p>New user, <a href="signin.php">sign in for Free</a>.</p>
                     </form>
-                    <div class="g-signin2" data-onsuccess="onSignIn"></div>
                     <?php
                     if (isset($error_message)) {
                         echo '<p class="text-danger">' . $error_message . '</p>';
