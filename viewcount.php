@@ -1,11 +1,18 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+    header("Location: admin.php");
+    exit;
+}
+
 if (!isset($_SESSION['view_count'])) {
     $_SESSION['view_count'] = 1;
 } else {
     $_SESSION['view_count']++;
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>

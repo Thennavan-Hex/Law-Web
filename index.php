@@ -63,7 +63,7 @@ if (isset($_POST['logout'])) {
             echo '</a>';
             echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">';
             echo '<a class="dropdown-item" href="editprofile.php">Edit Profile</a>';
-            echo '<a class="dropdown-item" href="#">Settings</a>';
+            echo '<a class="dropdown-item" href="#">Fav</a>';
             echo '<form method="POST" class="dropdown-item">';
             echo '<button type="submit" name="logout" class="btn btn-link">Logout</button>';
             echo '</form>';

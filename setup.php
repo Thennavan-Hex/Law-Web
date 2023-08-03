@@ -3,10 +3,12 @@ $conn = new mysqli('localhost', 'root', '', 'law');
 if ($conn->connect_error) {
     die("Connection Failed");
 }
+
 function tableExists($conn, $tableName) {
     $result = $conn->query("SHOW TABLES LIKE '$tableName'");
     return $result->num_rows > 0;
 }
+
 $tableExists = tableExists($conn, 'admins');
 if (!$tableExists) {
     $password = password_hash('admin', PASSWORD_DEFAULT);
@@ -25,6 +27,7 @@ if (!$tableExists) {
 } else {
     echo "Admin Table already created.";
 }
+
 $tableExists = tableExists($conn, 'users');
 if (!$tableExists) {
     $testUserPassword = password_hash('testuser', PASSWORD_DEFAULT);
@@ -47,7 +50,9 @@ if (!$tableExists) {
     echo "<br>User Table is created.";
 } else {
     echo "<br>User Table already created.";
-}$tableExists = tableExists($conn, 'blogs');
+}
+
+$tableExists = tableExists($conn, 'blogs');
 if (!$tableExists) {
     $sql = "CREATE TABLE blogs (
         id INT(11) AUTO_INCREMENT PRIMARY KEY,
@@ -66,6 +71,21 @@ if (!$tableExists) {
     echo "<br>Blog Table already created.";
 }
 
+$tableExists = tableExists($conn, 'categories');
+if (!$tableExists) {
+    $sql = "CREATE TABLE categories (
+        id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255) NOT NULL
+    )";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Table categories created successfully.";
+    } else {
+        echo "Error creating table: " . $conn->error;
+    }
+} else {
+    echo "Categories Table already created.";
+}
 
 $conn->close();
 ?>

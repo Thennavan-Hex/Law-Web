@@ -57,6 +57,16 @@ if (isset($_POST['logout'])) {
                     </div>
                 </a>
             </div>
+            <div class="col-md-4">
+                <a href="new_category.php" class="card-link">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Category</h5>
+                            <p class="card-text">Click here to access the new category.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 
