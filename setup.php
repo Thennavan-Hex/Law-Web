@@ -3,11 +3,11 @@ $conn = new mysqli('localhost', 'root', '', 'law');
 if ($conn->connect_error) {
     die("Connection Failed");
 }
-$tableExists = false;
-$result = $conn->query("SHOW TABLES LIKE 'admins'");
-if ($result->num_rows > 0) {
-    $tableExists = true;
+function tableExists($conn, $tableName) {
+    $result = $conn->query("SHOW TABLES LIKE '$tableName'");
+    return $result->num_rows > 0;
 }
+$tableExists = tableExists($conn, 'admins');
 if (!$tableExists) {
     $password = password_hash('admin', PASSWORD_DEFAULT);
     $sql = "CREATE TABLE admins (
@@ -25,11 +25,7 @@ if (!$tableExists) {
 } else {
     echo "Admin Table already created.";
 }
-$tableExists = false;
-$result = $conn->query("SHOW TABLES LIKE 'users'");
-if ($result->num_rows > 0) {
-    $tableExists = true;
-}
+$tableExists = tableExists($conn, 'users');
 if (!$tableExists) {
     $testUserPassword = password_hash('testuser', PASSWORD_DEFAULT);
     $sql = "CREATE TABLE users (
@@ -51,7 +47,27 @@ if (!$tableExists) {
     echo "<br>User Table is created.";
 } else {
     echo "<br>User Table already created.";
+}$tableExists = tableExists($conn, 'blogs');
+if (!$tableExists) {
+    $sql = "CREATE TABLE blogs (
+        id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        image VARCHAR(255) DEFAULT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Table blogs created successfully.";
+    } else {
+        echo "Error creating table: " . $conn->error;
+    }
+} else {
+    echo "<br>Blog Table already created.";
 }
+
+
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -63,12 +79,12 @@ if (!$tableExists) {
     <div class="container">
         <h1 class="mt-3">Setup Page</h1>
         <?php if (!$tableExists) { ?>
-            <p>Click the "Setup" button to create the table and insert the initial admin account.</p>
+            <p>Click the "Setup" button to create the tables and insert the initial admin account and test user.</p>
             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                 <button type="submit" name="setup" class="btn btn-primary">Setup</button>
             </form>
         <?php } else { ?>
-            <p>Table already created. You can proceed to the login page.</p>
+            <p>Tables already created. You can proceed to the login page.</p>
             <a href="login.php" class="btn btn-primary">Go to Login</a>
         <?php } ?>
     </div>

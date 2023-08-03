@@ -7,6 +7,7 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
@@ -63,9 +64,53 @@
         </ul>
       </div>
     </nav>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/main.js"></script>
-  </body>
+    <div class="container mt-5">
+    <div class="row">
+      <?php
+        $host = 'localhost';
+        $username = 'root';
+        $password = '';
+        $database = 'law';
+        $conn = new mysqli($host, $username, $password, $database);
+
+        if ($conn->connect_error) {
+            die("Connection Failed: " . $conn->connect_error);
+        }
+        $columnExists = $conn->query("SHOW COLUMNS FROM blogs LIKE 'image'");
+        $useImage = $columnExists->num_rows > 0;
+        $sql = "SELECT id, title, content, image FROM blogs";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+          while ($row = $result->fetch_assoc()) {
+            $blog_id = $row["id"];
+            $blog_title = $row["title"];
+            $blog_content = $row["content"];
+            $blog_image = $useImage ? $row["image"] : '';
+            $content_snippet = substr($blog_content, 0, 200) . '...';
+            $image_path = $blog_image ? $blog_image : './img/law.jpg';
+            echo '<div class="col-md-4">';
+            echo '<div class="card blog-card">';
+            echo '<img src="' . $image_path . '" class="card-img-top" alt="Blog Image">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . $blog_title . '</h5>';
+            echo '<p class="card-text">' . $content_snippet . '</p>';
+            echo '<a href="blog.php?id=' . $blog_id . '" class="btn btn-primary">Read More</a>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+          }
+        } else {
+          echo '<p>No blogs found.</p>';
+        }
+
+        $conn->close();
+      ?>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
+
+
+
+
