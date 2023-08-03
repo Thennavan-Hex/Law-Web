@@ -13,7 +13,6 @@ $conn = new mysqli($host, $username, $password, $database);
 if ($conn->connect_error) {
     die("Connection Failed: " . $conn->connect_error);
 }
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_blog_to_category'])) {
     $category_id = $_POST['category_id'];
     $blog_id = $_POST['blog_id'];
@@ -35,7 +34,6 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $blog_title = $row['title'];
-
 $category_id = $_GET['category_id'];
 $sql = "SELECT id, name FROM categories WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -45,7 +43,6 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $category_name = $row['name'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

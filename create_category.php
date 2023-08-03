@@ -4,7 +4,6 @@ if (!isset($_SESSION['user_id']) || !$_SESSION['is_admin']) {
     header("Location: login.php");
     exit();
 }
-
 $host = 'localhost';
 $username = 'root';
 $password = '';
@@ -28,12 +27,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_category'])) {
 $sql = "SELECT id, name FROM categories";
 $result = $conn->query($sql);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Category Editor - Admin</title>
-    <!-- Include CSS and JS dependencies -->
 </head>
 <body>
     <h1>Category Editor - Admin</h1>

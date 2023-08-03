@@ -86,7 +86,6 @@ $result = $conn->query($sql);
                     $blog_id = $row['id'];
                     $blog_title = $row['title'];
                     $blog_cover_image = $row['cover_image'];
-                    // If cover image is not present, use the default image
                     $image_path = $blog_cover_image ? $blog_cover_image : 'img/law.jpg';
                     ?>
                     <div class="col-md-4">
