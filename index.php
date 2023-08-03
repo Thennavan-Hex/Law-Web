@@ -7,10 +7,9 @@
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
+<nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
     <a class="navbar-brand" href="index.php">NECLAW</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="fa fa-bars"></span> Menu
@@ -52,7 +51,7 @@
               echo $name;
               echo '</a>';
               echo '<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">';
-              echo '<a class="dropdown-item" href="#">Edit Profile</a>';
+              echo '<a class="dropdown-item" href="editprofile.php">Edit Profile</a>';
               echo '<a class="dropdown-item" href="#">Settings</a>';
               echo '<a class="dropdown-item" href="#">Logout</a>';
               echo '</div>';
@@ -63,8 +62,36 @@
           ?>
         </ul>
       </div>
-    </nav>
-    <div class="container mt-5">
+ </nav>
+ <style>
+    .blog-card {
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+    
+    .blog-card:hover {
+      transform: scale(1.05);
+    }
+
+    .read-more-btn {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 8px 15px;
+      font-size: 14px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .read-more-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+  <div class="container mt-5">
     <div class="row">
       <?php
         $host = 'localhost';
@@ -84,17 +111,14 @@
           while ($row = $result->fetch_assoc()) {
             $blog_id = $row["id"];
             $blog_title = $row["title"];
-            $blog_content = $row["content"];
             $blog_image = $useImage ? $row["image"] : '';
-            $content_snippet = substr($blog_content, 0, 200) . '...';
-            $image_path = $blog_image ? $blog_image : './img/law.jpg';
+            $image_path = $blog_image ? $blog_image : 'img/law.jpg';
             echo '<div class="col-md-4">';
             echo '<div class="card blog-card">';
             echo '<img src="' . $image_path . '" class="card-img-top" alt="Blog Image">';
             echo '<div class="card-body">';
             echo '<h5 class="card-title">' . $blog_title . '</h5>';
-            echo '<p class="card-text">' . $content_snippet . '</p>';
-            echo '<a href="blog.php?id=' . $blog_id . '" class="btn btn-primary">Read More</a>';
+            echo '<a href="view_blog.php?id=' . $blog_id . '" class="btn btn-primary read-more-btn">Read More</a>';
             echo '</div>';
             echo '</div>';
             echo '</div>';
@@ -107,10 +131,9 @@
       ?>
     </div>
   </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
-
-
-
-
