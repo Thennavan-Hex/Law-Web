@@ -3,12 +3,10 @@ $conn = new mysqli('localhost', 'root', '', 'law');
 if ($conn->connect_error) {
     die("Connection Failed");
 }
-
 function tableExists($conn, $tableName) {
     $result = $conn->query("SHOW TABLES LIKE '$tableName'");
     return $result->num_rows > 0;
 }
-
 $tableExists = tableExists($conn, 'admins');
 if (!$tableExists) {
     $password = password_hash('admin', PASSWORD_DEFAULT);
@@ -27,7 +25,6 @@ if (!$tableExists) {
 } else {
     echo "Admin Table already created.";
 }
-
 $tableExists = tableExists($conn, 'users');
 if (!$tableExists) {
     $testUserPassword = password_hash('testuser', PASSWORD_DEFAULT);
@@ -51,11 +48,10 @@ if (!$tableExists) {
 } else {
     echo "<br>User Table already created.";
 }
-
 $tableExists = tableExists($conn, 'blogs');
 if (!$tableExists) {
     $sql = "CREATE TABLE blogs (
-        id INT(11) AUTO_INCREMENT PRIMARY KEY,
+        id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         content TEXT NOT NULL,
         cover_image VARCHAR(255) DEFAULT NULL,
@@ -71,22 +67,22 @@ if (!$tableExists) {
     echo "<br>Blog Table already created.";
 }
 
-$tableExists = tableExists($conn, 'categories');
+$tableExists = tableExists($conn, 'category');
 if (!$tableExists) {
-    $sql = "CREATE TABLE categories (
-        id INT(11) AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL
+    $sql = "CREATE TABLE category (
+        id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        blog_id INT(11) UNSIGNED NOT NULL,
+        category_name VARCHAR(255) NOT NULL,
+        FOREIGN KEY (blog_id) REFERENCES blogs (id) ON DELETE CASCADE
     )";
-
     if ($conn->query($sql) === TRUE) {
-        echo "Table categories created successfully.";
+        echo "Table category created successfully.";
     } else {
-        echo "Error creating table: " . $conn->error;
+        echo "Error creating table category: " . $conn->error;
     }
 } else {
-    echo "Categories Table already created.";
+    echo "Category Table already created.";
 }
-
 $conn->close();
 ?>
 <!DOCTYPE html>
