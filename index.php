@@ -113,15 +113,15 @@ if (isset($_POST['logout'])) {
         if ($conn->connect_error) {
             die("Connection Failed: " . $conn->connect_error);
         }
-        $columnExists = $conn->query("SHOW COLUMNS FROM blogs LIKE 'image'");
+        $columnExists = $conn->query("SHOW COLUMNS FROM blogs LIKE 'cover_image'");
         $useImage = $columnExists->num_rows > 0;
-        $sql = "SELECT id, title, content, image FROM blogs";
+        $sql = "SELECT id, title, content, cover_image FROM blogs";
         $result = $conn->query($sql);
         if ($result->num_rows > 0) {
           while ($row = $result->fetch_assoc()) {
             $blog_id = $row["id"];
             $blog_title = $row["title"];
-            $blog_image = $useImage ? $row["image"] : '';
+            $blog_image = $useImage ? $row["cover_image"] : '';
             $image_path = $blog_image ? $blog_image : 'img/law.jpg';
             echo '<div class="col-md-4">';
             echo '<div class="card blog-card">';

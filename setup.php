@@ -58,10 +58,10 @@ if (!$tableExists) {
         id INT(11) AUTO_INCREMENT PRIMARY KEY,
         title VARCHAR(255) NOT NULL,
         content TEXT NOT NULL,
-        image VARCHAR(255) DEFAULT NULL,
+        cover_image VARCHAR(255) DEFAULT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
-
+    
     if ($conn->query($sql) === TRUE) {
         echo "Table blogs created successfully.";
     } else {
