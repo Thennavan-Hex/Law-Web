@@ -66,7 +66,6 @@ if (!$tableExists) {
 } else {
     echo "<br>Blog Table already created.";
 }
-
 $tableExists = tableExists($conn, 'category');
 if (!$tableExists) {
     $sql = "CREATE TABLE category (
@@ -82,6 +81,32 @@ if (!$tableExists) {
     }
 } else {
     echo "Category Table already created.";
+}
+$tableExists = tableExists($conn, 'favorites');
+if (!$tableExists) {
+    $sql = "CREATE TABLE favorites (
+        id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        user_id INT(11) UNSIGNED NOT NULL,
+        blog_id INT(11) UNSIGNED NOT NULL
+    )";
+    if ($conn->query($sql) === TRUE) {
+        echo "Table favorites created successfully.";
+    } else {
+        echo "Error creating table favorites: " . $conn->error;
+    }
+    $sql = "ALTER TABLE favorites
+            ADD CONSTRAINT fk_user_id
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+            ADD CONSTRAINT fk_blog_id
+            FOREIGN KEY (blog_id) REFERENCES blogs (id) ON DELETE CASCADE";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Foreign key constraints added successfully.";
+    } else {
+        echo "Error adding foreign key constraints: " . $conn->error;
+    }
+} else {
+    echo "Favorites Table already created.";
 }
 $conn->close();
 ?>
@@ -106,13 +131,6 @@ $conn->close();
     </style>
 </head>
 <body>
-    <div class="container">
-        <a href="#" class="star-icon <?php echo ($isFavorite) ? 'favorite' : ''; ?>" id="add-to-favorites"><i class="fas fa-star"></i></a>
-        <h1 class="mt-3"><?php echo $blog['title']; ?></h1>
-        <p><?php echo $blog['created_at']; ?></p>
-        <div class="mt-3">
-            <?php echo $blog['content']; ?>
-        </div>
         <a href="blog.php" class="btn btn-primary mt-3">Back to Blog List</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
