@@ -58,7 +58,7 @@ if (isset($_POST['logout'])) {
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="new_category.php" class="card-link">
+                <a href="cv.php" class="card-link">
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Category</h5>
