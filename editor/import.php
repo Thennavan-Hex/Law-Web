@@ -13,14 +13,23 @@ foreach ($files as $file) {
     $content = file_get_contents($file);
     preg_match('/<title>(.*?)<\/title>/i', $content, $titleMatches);
     $title = !empty($titleMatches) ? $titleMatches[1] : pathinfo($file, PATHINFO_FILENAME);
-    $insertSql = "INSERT INTO blogs (title, content) VALUES (?, ?)";
-    $stmt = $conn->prepare($insertSql);
-    $stmt->bind_param("ss", $title, $content);
-    $stmt->execute();
-    $stmt->close();
+    $checkSql = "SELECT id FROM blogs WHERE title = ?";
+    $checkStmt = $conn->prepare($checkSql);
+    $checkStmt->bind_param("s", $title);
+    $checkStmt->execute();
+    $checkStmt->store_result();
+    if ($checkStmt->num_rows == 0) {
+        $insertSql = "INSERT INTO blogs (title, content) VALUES (?, ?)";
+        $stmt = $conn->prepare($insertSql);
+        $stmt->bind_param("ss", $title, $content);
+        $stmt->execute();
+        $stmt->close();
+        echo "Inserted blog with title: $title<br>";
+    } else {
+        echo "Skipped existing blog with title: $title<br>";
+    }
 
-    echo "Inserted blog with title: $title<br>";
+    $checkStmt->close();
 }
-
 $conn->close();
 ?>
