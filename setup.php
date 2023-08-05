@@ -68,11 +68,10 @@ if (!$tableExists) {
 }
 $tableExists = tableExists($conn, 'category');
 if (!$tableExists) {
-    $sql = "CREATE TABLE category (
+    $sql = "CREATE TABLE categories (
         id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-        blog_id INT(11) UNSIGNED NOT NULL,
         category_name VARCHAR(255) NOT NULL,
-        FOREIGN KEY (blog_id) REFERENCES blogs (id) ON DELETE CASCADE
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )";
     if ($conn->query($sql) === TRUE) {
         echo "Table category created successfully.";
@@ -81,6 +80,21 @@ if (!$tableExists) {
     }
 } else {
     echo "Category Table already created.";
+}
+$tableExists = tableExists($conn, 'category_blog');
+if (!$tableExists) {
+    $sql = "CREATE TABLE category_blog (
+        id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        category_id INT(11) UNSIGNED NOT NULL,
+        blog_id INT(11) UNSIGNED NOT NULL,
+        FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE,
+        FOREIGN KEY (blog_id) REFERENCES blogs (id) ON DELETE CASCADE
+    )";
+    if ($conn->query($sql) === TRUE) {
+        echo "Table category_blog created successfully";
+    } else {
+        echo "Error creating table: " . $conn->error;
+    }
 }
 $tableExists = tableExists($conn, 'favorites');
 if (!$tableExists) {

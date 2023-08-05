@@ -30,6 +30,7 @@ if (isset($_POST['logout'])) {
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto mr-md-3">
         <li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="cc.php" class="nav-link">Category</a></li>
         <li class="nav-item"><a href="#" class="nav-link">About</a></li>
         <li class="nav-item"><a href="contactus.php" class="nav-link">Contact</a></li>
         <li class="nav-item dropdown">
@@ -80,6 +81,7 @@ if (isset($_POST['logout'])) {
       border: 1px solid rgba(0, 0, 0, 0.2);
       border-radius: 10px;
       transition: transform 0.3s;
+      margin-bottom: 20px; 
     }
     
     .blog-card:hover {
