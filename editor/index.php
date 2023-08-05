@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?html session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,24 +41,24 @@
     <div class="container py-3" id="page-container">
         <h3>Laws's Edit Page</h3>
         <hr>
-        <?php 
+        <?html 
         if(isset($_SESSION['msg'])):
         ?>
-        <div class="alert alert-<?php echo $_SESSION['msg']['type'] ?>">
+        <div class="alert alert-<?html echo $_SESSION['msg']['type'] ?>">
             <div class="d-flex w-100">
-                <div class="col-11"><?php echo $_SESSION['msg']['text'] ?></div>
+                <div class="col-11"><?html echo $_SESSION['msg']['text'] ?></div>
                 <div class="col-1 d-flex justify-content-end align-items-center"><button class="btn-close" onclick="$(this).closest('.alert').hide('slow')"></button></div>
             </div>
         </div>
-        <?php 
+        <?html 
             unset($_SESSION['msg']);
         endif;
         ?>
         <div class="col-12 my-2">
-            <a href="manage_page.php" class="btn btn-info text-light text-decoration-none"> + Add New Page Content</a>
+            <a href="manage_page.html" class="btn btn-info text-light text-decoration-none"> + Add New Page Content</a>
         </div>
         <div class="row row-cols-sm-1 row-cols-md-3 row-cols-xl-4 gx-4 gy-2">
-        <?php 
+        <?html 
         $pages = scandir('./pages');
         asort($pages);
         foreach($pages as $page):
@@ -68,15 +68,15 @@
         <div class="col">
             <div class="card border-right border-primary rounded-0">
                 <div class="card-body">
-                    <div class="col-12 text-truncate"><a href="view_page.php?page=<?php echo urlencode($page) ?>" title="<?php echo $page ?>" class=""><b><?php echo $page ?></b></a></div>
+                    <div class="col-12 text-truncate"><a href="view_page.html?page=<?html echo urlencode($page) ?>" title="<?html echo $page ?>" class=""><b><?html echo $page ?></b></a></div>
                     <div class="w-100 d-flex justify-content-end">
-                        <a href="manage_page.php?page=<?php echo urlencode($page) ?>" class="btn btn-sm rounded-0 btn-primary me-2">Edit</a>
-                        <a href="delete_page.php?page=<?php echo urlencode($page) ?>" class="btn btn-sm rounded-0 btn-danger delete_data">Delete</a>
+                        <a href="manage_page.html?page=<?html echo urlencode($page) ?>" class="btn btn-sm rounded-0 btn-primary me-2">Edit</a>
+                        <a href="delete_page.html?page=<?html echo urlencode($page) ?>" class="btn btn-sm rounded-0 btn-danger delete_data">Delete</a>
                     </div>
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
+        <?html endforeach; ?>
         </div>
     </div>
     <script>

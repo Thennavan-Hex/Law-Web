@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?html session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,16 +45,16 @@
         </div>
     </nav>
     <div class="container py-3" id="page-container">
-        <?php 
+        <?html 
         if(isset($_SESSION['msg'])):
         ?>
-        <div class="alert alert-<?php echo $_SESSION['msg']['type'] ?>">
+        <div class="alert alert-<?html echo $_SESSION['msg']['type'] ?>">
             <div class="d-flex w-100">
-                <div class="col-11"><?php echo $_SESSION['msg']['text'] ?></div>
+                <div class="col-11"><?html echo $_SESSION['msg']['text'] ?></div>
                 <div class="col-1"><button class="btn-close" onclick="$(this).closest('.alert').hide('slow')"></button></div>
             </div>
         </div>
-        <?php 
+        <?html 
             unset($_SESSION['msg']);
         endif;
         ?>
@@ -63,16 +63,16 @@
                 Manage Page Content
             </div>
             <div class="card-body">
-                <form action="save_page.php" id="content-form" method="POST">
-                    <input type="hidden" name="filename" value="<?php echo isset($_SESSION['POST']['filename']) ? $_SESSION['POST']['filename'] : (isset($_GET['page']) ? str_replace('.html','',$_GET['page']) : '')  ?>">
+                <form action="save_page.html" id="content-form" method="POST">
+                    <input type="hidden" name="filename" value="<?html echo isset($_SESSION['POST']['filename']) ? $_SESSION['POST']['filename'] : (isset($_GET['page']) ? str_replace('.html','',$_GET['page']) : '')  ?>">
                     <div class="form-group col-6">
                         <label for="fname" class="control-label">File Name <span class="text-info"><small>([a-z0-9A-Z_-])</small></span></label>
-                        <input type="text" pattern="[a-z0-9A-Z_-]+" name="fname" id="fname" autofocus autocomplete="off" class="form-control form-control-sm border-0 border-bottom rounded-0" value="<?php echo isset($_SESSION['POST']['fname']) ? $_SESSION['POST']['fname'] : (isset($_GET['page']) ? str_replace('.html','',$_GET['page']) : '')  ?>" required>
+                        <input type="text" pattern="[a-z0-9A-Z_-]+" name="fname" id="fname" autofocus autocomplete="off" class="form-control form-control-sm border-0 border-bottom rounded-0" value="<?html echo isset($_SESSION['POST']['fname']) ? $_SESSION['POST']['fname'] : (isset($_GET['page']) ? str_replace('.html','',$_GET['page']) : '')  ?>" required>
                         <span class="text-info"><small>This will be added with .html file extension upod saving.</small></span>
                     </div>
                     <div class="form-group col-12">
                         <label for="content" class="control-label">Content</label>
-                        <textarea name="content" id="content" class="summernote" required><?php echo isset($_SESSION['POST']['content']) ? $_SESSION['POST']['content'] : (isset($_GET['page']) ? file_get_contents("./pages/{$_GET['page']}") : '')  ?></textarea>
+                        <textarea name="content" id="content" class="summernote" required><?html echo isset($_SESSION['POST']['content']) ? $_SESSION['POST']['content'] : (isset($_GET['page']) ? file_get_contents("./pages/{$_GET['page']}") : '')  ?></textarea>
                     </div>
                 </form>
             </div>

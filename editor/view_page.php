@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?html session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,16 +41,16 @@
     <div class="container py-3" id="page-container">
         <h3>Laws's Edit Page</h3>
         <hr>
-        <?php 
+        <?html 
         if(isset($_SESSION['msg'])):
         ?>
-        <div class="alert alert-<?php echo $_SESSION['msg']['type'] ?>">
+        <div class="alert alert-<?html echo $_SESSION['msg']['type'] ?>">
             <div class="d-flex w-100">
-                <div class="col-11"><?php echo $_SESSION['msg']['text'] ?></div>
+                <div class="col-11"><?html echo $_SESSION['msg']['text'] ?></div>
                 <div class="col-1 d-flex justify-content-end align-items-center"><button class="btn-close" onclick="$(this).closest('.alert').hide('slow')"></button></div>
             </div>
         </div>
-        <?php 
+        <?html 
             unset($_SESSION['msg']);
         endif;
         ?>
@@ -58,7 +58,7 @@
             <a href="./" class="btn btn-info text-light text-decoration-none"> Back to List</a>
         </div>
         <div class="content">
-            <?php echo isset($_GET['page']) && is_file("./pages/{$_GET['page']}") ? file_get_contents("./pages/{$_GET['page']}") : "<center>Unknown Page Content.</center>" ?>
+            <?html echo isset($_GET['page']) && is_file("./pages/{$_GET['page']}") ? file_get_contents("./pages/{$_GET['page']}") : "<center>Unknown Page Content.</center>" ?>
         </div>
     </div>
 </body>
