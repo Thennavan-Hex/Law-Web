@@ -1,3 +1,18 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
+    header("Location: admin.php");
+    exit;
+}
+
+if (!isset($_SESSION['view_count'])) {
+    $_SESSION['view_count'] = 1;
+} else {
+    $_SESSION['view_count']++;
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +27,7 @@
 <nav class="navbar navbar-expand-lg ftco_navbar ftco-navbar-light" id="ftco-navbar">
 </nav>
 <div class="container text-center mt-3">
-    <p>This page has been viewed <?html echo $_SESSION['view_count']; ?> times.</p>
+    <p>This page has been viewed <?php echo $_SESSION['view_count']; ?> times.</p>
 </div>
 <script src="js/jquery.min.js"></script>
 <script src="js/popper.js"></script>

@@ -1,4 +1,4 @@
-<?html
+<?php
 session_start();
 if(isset($_SESSION['msg']))
 unset($_SESSION['msg']);

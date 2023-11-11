@@ -1,3 +1,16 @@
+<?php
+session_start();
+function isAdminLoggedIn() {
+    return (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true);
+}
+if (isset($_POST['logout'])) {
+    if (isAdminLoggedIn()) {
+        session_destroy();
+        header("Location: admin.php");
+        exit;
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +28,7 @@
         <h1 class="text-center mb-4">Welcome to the Admin Page</h1>
         <div class="row justify-content-center">
             <div class="col-md-4">
-                <a href="view_logins.html" class="card-link">
+                <a href="view_logins.php" class="card-link">
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">View User Logins</h5>
@@ -25,7 +38,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="editor/index.html" class="card-link">
+                <a href="editor/index.php" class="card-link">
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Editor</h5>
@@ -35,7 +48,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="viewcount.html" class="card-link">
+                <a href="viewcount.php" class="card-link">
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">View Counts and Extra</h5>
@@ -45,7 +58,7 @@
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="cv.html" class="card-link">
+                <a href="cv.php" class="card-link">
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Category</h5>

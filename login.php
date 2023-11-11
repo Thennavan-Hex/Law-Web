@@ -1,3 +1,31 @@
+<?php
+session_start();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['username'];
+    $pass = $_POST['password'];
+    $conn = new mysqli('localhost', 'root', '', 'law');
+    if ($conn->connect_error) {
+        die("Connection Failed");
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt_result = $stmt->get_result();
+        if ($stmt_result->num_rows > 0) {
+            $data = $stmt_result->fetch_assoc();
+            if (password_verify($pass, $data['password'])) {
+                $_SESSION['user_id'] = $data['id']; 
+                header("Location: index.php");
+                exit;
+            } else {
+                $error_message = "Invalid Email or password";
+            }
+        } else {
+            $error_message = "Invalid Email or password";
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,9 +58,9 @@
                             <label class="form-check-label" for="rememberMe">Remember me</label>
                         </div>
                         <button type="submit" class="btn btn-primary login-btn">Login</button>
-                        <p>New user, <a href="signin.html">sign in for Free</a>.</p>
+                        <p>New user, <a href="signin.php">sign in for Free</a>.</p>
                     </form>
-                    <?html
+                    <?php
                     if (isset($error_message)) {
                         echo '<p class="text-danger">' . $error_message . '</p>';
                     }
